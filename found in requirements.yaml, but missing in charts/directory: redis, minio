@@ -1,0 +1,31 @@
+#found in requirements.yaml, but missing in charts/ directory: redis, minio
+trying to install spinnaker from helm chart -- error as below
+
+$ ./helm install -n cd charts/stable/spinnaker/ -f ../spinnaker-config.yaml --timeout 600 --version 1.1.6 --wait
+Error: found in requirements.yaml, but missing in charts/ directory: redis, minio
+
+$ ./helm repo list
+NAME  	URL
+stable	https://kubernetes-charts.storage.googleapis.com
+local 	http://127.0.0.1:8879/charts
+
+solution:--- not work
+$ ./helm repo add redis https://kubernetes-charts.storage.googleapis.com
+"redis" has been added to your repositories
+$ ./helm repo add minio https://kubernetes-charts.storage.googleapis.com
+"minio" has been added to your repositories
+
+
+$ ./helm search redis |grep -i spinn
+redis/spinnaker                     	1.14.0       	1.12.5                      	Open source, multi-cloud continuous delivery platform for...
+$ ./helm update
+Command "update" is deprecated, use 'helm repo update'
+
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "minio" chart repository
+...Successfully got an update from the "redis" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+
+=== still not fix it... pending 
